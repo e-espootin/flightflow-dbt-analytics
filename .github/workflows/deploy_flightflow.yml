@@ -5,19 +5,19 @@ on:
   push: 
     branches:
       - dev
+      - main
 
 jobs:
   dbt-run:
     runs-on: ubuntu-latest
-
+    
     env:
-      DBT_TARGET: dev
+      DBT_TARGET: ${{ github.ref_name }}"
       WORKING_DIR: transform
     steps:
     - name: Print DBT target
       run: echo "DBT target is ${{ env.DBT_TARGET }}"
 
-    # Step 1: Check out the repository
     - name: Checkout code
       uses: actions/checkout@v3
 
@@ -33,31 +33,12 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    # echo profile
-    - name: Echo DBT profiles.yml
-      run: cat transform/profiles.yml
-        
-    - name: List directory contents
-      run: |
-        echo "Current directory:"
-        ls -la
-        echo "Transform directory:"
-        ls -la transform/
-        
-    - name: Echo S3_PATH
-      run: |
-        echo "S3_PATH is ${{ env.S3_PATH }}"
-        echo "AWS_REGION is ${{ secrets.AWS_REGION }}"
-        
     - name: make debug
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_REGION: ${{ secrets.AWS_REGION }}
       run: make debug TARGET=${{ env.DBT_TARGET }}
-
-    - name: make deps
-      run: make deps TARGET=${{ env.DBT_TARGET }}
 
     - name: make test
       run: make test TARGET=${{ env.DBT_TARGET }}

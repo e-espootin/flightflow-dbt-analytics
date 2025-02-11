@@ -28,9 +28,6 @@ run:
 test:
 	cd $(DBT_FOLDER) && dbt test --target $(TARGET) --profile $(PROFILE) --profiles-dir $(DBT_PROFILE_DIR)
 
-parse:
-	cd $(DBT_FOLDER) && dbt parse --target $(TARGET) --profile $(PROFILE) --profiles-dir $(DBT_PROFILE_DIR)
-
 build:
 	cd $(DBT_FOLDER) && dbt build --target $(TARGET) --profile $(PROFILE) --profiles-dir $(DBT_PROFILE_DIR) \
 		--vars '{"TRANSFORM_S3_PATH_OUTPUT": "$(TRANSFORM_S3_PATH_OUTPUT)", "TRANSFORM_S3_PATH_INPUT_EXCEL":"$(TRANSFORM_S3_PATH_INPUT_EXCEL)" }'
