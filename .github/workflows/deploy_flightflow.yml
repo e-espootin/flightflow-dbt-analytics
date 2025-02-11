@@ -38,14 +38,14 @@ jobs:
       run: cat transform/profiles.yml
  
     - name: make debug
-      run: make debug --target ${{ env.DBT_TARGET }}
+      run: make debug TARGET=${{ env.DBT_TARGET }}
 
     - name: make deps
-      run: make deps --target ${{ env.DBT_TARGET }}
+      run: make deps TARGET=${{ env.DBT_TARGET }}
 
     - name: make test
-      run: make test --target ${{ env.DBT_TARGET }}
+      run: make test TARGET=${{ env.DBT_TARGET }}
 
     - name: make run
-      run: make run --target ${{ env.DBT_TARGET }}
+      run: make run TARGET=${{ env.DBT_TARGET }}
 
