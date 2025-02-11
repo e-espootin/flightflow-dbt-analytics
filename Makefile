@@ -28,15 +28,17 @@ run:
 test:
 	cd $(DBT_FOLDER) && dbt test --target $(TARGET) --profile $(PROFILE) --profiles-dir $(DBT_PROFILE_DIR)
 
-parse:
-	cd $(DBT_FOLDER) && dbt parse --target $(TARGET) --profile $(PROFILE) --profiles-dir $(DBT_PROFILE_DIR)
-
 build:
 	cd $(DBT_FOLDER) && dbt build --target $(TARGET) --profile $(PROFILE) --profiles-dir $(DBT_PROFILE_DIR) \
 		--vars '{"TRANSFORM_S3_PATH_OUTPUT": "$(TRANSFORM_S3_PATH_OUTPUT)", "TRANSFORM_S3_PATH_INPUT_EXCEL":"$(TRANSFORM_S3_PATH_INPUT_EXCEL)" }'
 
+select:
+	cd $(DBT_FOLDER) && dbt run --select path:models/marts/orders/dim_aeroplane.sql --target $(TARGET) --profile $(PROFILE) --profiles-dir $(DBT_PROFILE_DIR) \
+		--vars '{"TRANSFORM_S3_PATH_OUTPUT": "$(TRANSFORM_S3_PATH_OUTPUT)", "TRANSFORM_S3_PATH_INPUT_EXCEL":"$(TRANSFORM_S3_PATH_INPUT_EXCEL)" }'
+
 .PHONY: docs
 docs: build
+	uv pip install -r requirements.txt
 	cd $(DBT_FOLDER) && dbt docs generate --target $(TARGET) --profile $(PROFILE) --profiles-dir $(DBT_PROFILE_DIR)
 	@echo "Starting documentation on http://localhost:8089"
 	cd $(DBT_FOLDER) && dbt docs serve --port 8089
@@ -45,8 +47,8 @@ clean:
 	cd $(DBT_FOLDER) && dbt clean --target $(TARGET) --profile $(PROFILE) --profiles-dir $(DBT_PROFILE_DIR)
 	
 duck_dev:
-	duckdb .duckdb/transform_dev.db -cmd "USE transform; show all tables"
+	cd $(DBT_FOLDER) && duckdb duckdb_dir/transform_dev.db -cmd "USE transform; show all tables"
 
 duck_prod:
-	duckdb .duckdb/transform_prod.db -cmd "USE transform; show all tables"
+	cd $(DBT_FOLDER) && duckdb duckdb_dir/transform_prod.db -cmd "USE transform; show all tables"
 

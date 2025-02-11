@@ -4,10 +4,6 @@
 
     with source as (
         select * from {{ source_relation }}
-        
-        {% if start_date and end_date %}
-            where (date >= '{{ start_date }}' and date < '{{ end_date }}') or ({{ start_date }} is null ) )
-        {% endif %}
     ),
 
     renamed as (

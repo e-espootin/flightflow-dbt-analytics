@@ -8,11 +8,6 @@ wheels/
 **/__pycache__/
 .archive
 .ruff_cache
-hello.py
-
-# dbt
-logs/
-
 
 # Virtual environments
 .venv
@@ -22,7 +17,3 @@ logs/
 *.duckdb
 *.wal
 
-# dbt
-transform/target/
-# dbt_packages/
-# logs/

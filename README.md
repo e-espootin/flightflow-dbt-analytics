@@ -1,22 +1,20 @@
 ## Project Overview
-This is a pure dbt project designed to transform Air Boltic’s raw data into a well-modeled data warehouse. It ingests CSV/JSON files from S3, applies cleaning and transformation logic in dbt, and produces streamlined tables ready for analytics. The focus is on clear, testable models and efficient structures that scale with business needs. All code and configurations are maintained in a central GitHub repo for version control and collaboration
-  - **Data Source**: CSV/JSON files in S3
-  - **Destination**: S3 as Parquet and CSV files
-  - **Requirements**: Github AWS keys
-  - **highlights**: 
-    - ?
+A simplified dbt project for transforming Air Boltic’s raw data into a ready-to-query data warehouse. It ingests XLSX/JSON files from S3, cleans and models them via dbt, and outputs analytics-friendly tables. This setup uses GitHub for version control and fosters a scalable, testable data pipeline.
+  - **Data Sources**: XLSX/JSON in S3  
+  - **Destination**: CSV/Parquet in S3  
+  - **Requirements**: GitHub, AWS S3 Bucket, AWS Keys
 
 
-## Tech Stack
-  - S3, dbt, duckdb, Tableau, GitHub Actions
+### Tech Stack
+  - AWS S3, dbt, DuckDB, Tableau, GitHub Actions
+  - ![project structure](docs/project_diagram/project_diagram.png)
 
-## Data Validation
-By defining strict table schemas and reference constraints, we ensure data validation and enforce a consistent contract, so only clean, reliable data flows into analytics
+### Data Validation
+Consistent schema and reference constraints ensure reliable data. Each dataset is validated before analytics.
 
-## Data Model Explanation
+### Data Model Explanation
 ![Data Model](docs/ERD_images/star_data_model.png)
-*Fig 1: Star data warehouse data model*
-*Fig 1: columns data type are outdated*
+*Fig 1: Star schema with fact table and dimensions*
 
 
 ## Project Structure
@@ -31,49 +29,48 @@ transform/
 └── profiles.yml      # profile
 ```
 
-## Setup & Installation
+### Setup & Installation
+- Prerequisites : Python 3.12, S3 Bucket, S3 keys
 ```bash
-git clone https://github.com/your-username/x
-cd bolt-data
+git clone https://github.com/e-espootin/flightflow-dbt-analytics
+cd flightflow-dbt-analytics
 uv venv --python 3.12
-uv pip install -r requirements.txt
-make debug
-make run
+source .venv/bin/activate
+cp .env.template .env
+make build
 ```
 
-## demo presenting
+
+## Showcase
+A sample Tableau Public analysis: 
 [Tableau public](https://public.tableau.com/app/profile/ebrahim.espootin/viz/demo1_17392217179420/Dashboard1/)
 
-### Questions & Responses
-- How **"self-service analysis"** will make happen for the business users?
-  - We transform raw data (from Sheets/JSON) into clean, analytics-ready datasets through dbt. The final outputs are delivered to a target path in S3 (organized and structured). From there, presentation/BI tools (like Looker) can directly connect or read the curated datasets in S3. Because each table and field is clearly defined, business users can easily create their own reports and dashboards—giving them the freedom to explore insights without heavy IT support
-- "enable monitoring" 
-  - We use dbt’s built-in testing and logging features to monitor data quality.
+### FAQ
 - why you have designed such a data model?
-  - We designed a star analytics model (fact table surrounded by dimensions) so data can be fetched quickly and analyzed with fewer joins. This structure helps business users run queries efficiently, making it easier to build dashboards or reports that deliver fast, meaningful insights. It’s straightforward to expand and maintain, ensuring smooth scalability as more data comes in.
+  - Organized for quick queries with fewer joins, supporting analytics and dashboards.
 - what would you do if you had more time for the task ?
-  - Improve Data Validation
+  - More data validation
 	-	Performance Tuning with indexes, partitioning
-  - improve CI/CD
+  - Enhanced CI/CD
+  - Potential PySpark integration
+
+- How **"self-service analysis"** will make happen for the business users?
+  - We deliver finalized, structured tables to S3. Tools like Looker connect to them seamlessly, letting teams build their own dashboards.
+- How would you envision the ideal CI/CD process to implement these changes over time?
+  - Use automated ingestion (e.g., Databricks Autoloader), robust packaging (Databricks Asset Bundles), integration tests, versioning in Git.
+
   
-
-### Questions & Responses (Part 2)
-- How would you envision the ideal CI/CD process to implement these changes over time???
-  - use Autoloader continuously ingests new data from sources (like S3) into staging tables
-  - use Databricks Asset Bundles (DABs) for package and version 
-  - use DLT tables
-  - make integration test for stage environment
-- How would your answer differ in the real world use case where resources are limited and perfect tooling might not be available? - What are some of the low effort/short term and high effort/long term things you would suggest we implement?
-  - In a real-world setup with limited resources, we adapt our approach to fit the actual budget and tooling constraints. Here’s how we’d break it down:
-	1.	Low Effort / Short Term (When Budget Isn’t Tight)
-	•	Use Databricks & Autoloader: Quickly ingest and process data at scale with minimal overhead. Databricks handles the infrastructure, making data pipelines simpler to manage.
-	2.	High Effort / Long Term (Budget Constraints)
-	•	Local Dev with Docker or On-Prem: Stand up a small dev/staging environment on-prem or in Docker to manage costs. This covers compute needs without the full Databricks stack.
-	•	BI-as-Code: Keep dashboards and reporting logic in Git (e.g., versioned LookML, or code-based BI solutions) to ensure collaboration, rollback, and clarity around changes.
+- How would your answer differ in the real world use case where resources are limited and perfect tooling might not be available?
+  - Adapt to budget/tooling:
+    - Low Effort/Short Term: Databricks & Autoloader for scalable ingestion.
+    - High Effort/Long Term:
+      - Enhance Databricks CI/CD and uses Databricks Asset Bundles(DABs).
+      - Kubernetes environment for cheaper dev/stage.
+      - PySpark for large-scale processing.
+      - BI-as-Code (Git) for collaboration/rollback.
+      - Advanced DBT tests for data quality.
 
 
-## added tips :databricks
-  - Databricks community edition doesn't support Autoloader
-  - Databricks Autoloader is not cover xlsx
+
 
 

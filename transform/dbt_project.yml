@@ -35,5 +35,5 @@ models:
           +materialized: "{{ 'incremental' if target.name == 'prod' else 'table' }}"
           +schema: mart
           +on_schema_change: append_new_columns
-          +post-hook: '{{ export_data("main_mart.fact_order", "order_date", "s3://dev-challenge-bucket-eu1-ee/bolt/transformed-data" ) }}'
-          #+post-hook: '{{ export_data_csv("main_mart.fact_order", var("TRANSFORM_S3_PATH_OUTPUT") ) }}'
+          #+post-hook: '{{ export_data_parquet_partition("main_mart.fact_order", "order_date", var("TRANSFORM_S3_PATH_OUTPUT") ) }}'
+          +post-hook: '{{ export_data_csv("main_mart.fact_order", var("TRANSFORM_S3_PATH_OUTPUT") ) }}'

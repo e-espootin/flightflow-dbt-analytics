@@ -12,7 +12,7 @@ transform:
         - type: s3
           region: "{{ env_var('AWS_REGION') }}"
           key_id: "{{ env_var('AWS_ACCESS_KEY_ID') }}"
-          secret: "{{ env_var('AWS_SECRET_ACCESS_KEY')}}"
+          secret: "{{ env_var('AWS_SECRET_ACCESS_KEY') }}"
 
     prod:
       type: duckdb
