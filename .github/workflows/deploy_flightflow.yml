@@ -12,8 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-      DBT_TARGET: ${{ github.ref_name }}"
+      DBT_TARGET: ${{ github.ref_name }}
       WORKING_DIR: transform
+
     steps:
     - name: Print DBT target
       run: echo "DBT target is ${{ env.DBT_TARGET }}"
