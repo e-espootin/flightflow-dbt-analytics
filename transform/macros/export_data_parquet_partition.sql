@@ -1,4 +1,4 @@
-{% macro export_data(table, order_date, s3_target_path) %}
+{% macro export_data_parquet_partition(table, order_date, s3_target_path) %}
 {% set s3_path = env_var('TRANSFORM_S3_PATH_OUTPUT', 'a') %}
     COPY (
         SELECT *,

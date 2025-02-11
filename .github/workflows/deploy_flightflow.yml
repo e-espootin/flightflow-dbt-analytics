@@ -31,21 +31,22 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: '3.12'
-
+    
     # Install dependencies
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+    
+    - name: duckdb
+      run: mkdir duckdb_dir
 
     - name: make debug
       run: make debug TARGET=${{ env.DBT_TARGET }}
     
-    - name: make run
-      run: make run TARGET=${{ env.DBT_TARGET }}
+    - name: make build
+      run: make build TARGET=${{ env.DBT_TARGET }}
 
-    - name: make test
-      run: make test TARGET=${{ env.DBT_TARGET }}
 
     
 
