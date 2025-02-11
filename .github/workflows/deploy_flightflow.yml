@@ -40,10 +40,12 @@ jobs:
 
     - name: make debug
       run: make debug TARGET=${{ env.DBT_TARGET }}
+    
+    - name: make run
+      run: make run TARGET=${{ env.DBT_TARGET }}
 
     - name: make test
       run: make test TARGET=${{ env.DBT_TARGET }}
 
-    - name: make run
-      run: make run TARGET=${{ env.DBT_TARGET }}
+    
 
