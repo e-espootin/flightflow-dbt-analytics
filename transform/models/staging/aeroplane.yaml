@@ -1,0 +1,7 @@
+models:
+  - name: aeroplane
+    description: "air-boltic-data2"
+    columns:
+      - name: AirplaneID
+      - name: Airplane_Model
+      - name: Manufacturer

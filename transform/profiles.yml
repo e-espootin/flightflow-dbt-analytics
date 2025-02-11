@@ -1,0 +1,31 @@
+transform:
+  outputs:
+    dev:
+      type: duckdb
+      path: "{{ env_var('DUCKDB_DEV_PATH') }}"
+      extensions:
+        - httpfs
+        - parquet
+      plugins:
+        - module: excel
+      secrets:
+        - type: s3
+          region: "{{ env_var('AWS_REGION') }}"
+          key_id: "{{ env_var('AWS_ACCESS_KEY_ID') }}"
+          secret: "{{ env_var('AWS_SECRET_ACCESS_KEY')}}"
+
+    prod:
+      type: duckdb
+      path: "{{ env_var('DUCKDB_PROD_PATH') }}"
+      extensions:
+        - httpfs
+        - parquet
+      plugins:
+        - module: excel
+      secrets:
+        - type: s3
+          region: "{{ env_var('AWS_REGION') }}"
+          key_id: "{{ env_var('AWS_ACCESS_KEY_ID') }}"
+          secret: "{{ env_var('AWS_SECRET_ACCESS_KEY')}}"
+
+  target: dev

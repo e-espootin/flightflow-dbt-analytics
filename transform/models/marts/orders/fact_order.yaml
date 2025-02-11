@@ -1,0 +1,61 @@
+models:
+  - name: fact_order
+    description: "fact_order"
+    config:
+      contract:
+        enforced: true
+      constraints:
+        - type: check
+          columns: ["order_date"]
+          expression: "cast(order_date as date)"
+          name: "make_sure_order_date_is_a_date"
+    columns:
+      - name: OrderID
+        data_type: bigint
+        data_tests:
+          - unique
+          - not_null
+      - name: CustomerID
+        data_type: int
+      - name: TripID
+        data_type: bigint
+        data_tests:
+          - not_null
+      - name: PriceEUR
+        data_type: decimal(10,2)
+        data_tests:
+          - not_null
+      - name: SeatNo
+        data_type: varchar(10)
+        data_tests:
+          - not_null
+      - name: Status
+        data_type: string
+        data_tests:
+          - not_null
+      - name: Origin_City
+        data_type: string
+        data_tests:
+          - not_null
+      - name: Destination_City
+        data_type: string
+        data_tests:
+          - not_null
+      - name: AirplaneID
+        data_type: int
+        data_tests:
+          - not_null
+      - name: departure_time
+        data_type: TIMESTAMP_NS
+        data_tests:
+          - not_null
+      - name: arrival_time
+        data_type: TIMESTAMP_NS
+        data_tests:
+          - not_null
+      - name: CustomerGroupID
+        data_type: int
+      - name: order_date
+        data_type: date
+        data_tests:
+          - not_null

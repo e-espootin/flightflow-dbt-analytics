@@ -1,0 +1,28 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+**/__pycache__/
+.archive
+.ruff_cache
+hello.py
+
+# dbt
+logs/
+
+
+# Virtual environments
+.venv
+.env
+
+# ignore duckdb
+*.duckdb
+*.wal
+
+# dbt
+transform/target/
+# dbt_packages/
+# logs/

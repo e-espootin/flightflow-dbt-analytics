@@ -1,0 +1,15 @@
+models:
+  - name: customer
+    description: "air-boltic-data"
+    columns:
+      - name: CustomerID
+        description: "The primary key for this table"
+        data_tests:
+          - unique
+          - not_null
+      - name: Name
+      - name: CustomerGroupID
+      - name: Email
+      - name: Phone_Number
+
+

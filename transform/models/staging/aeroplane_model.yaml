@@ -1,0 +1,17 @@
+models:
+  - name: aeroplane_model
+    description: "aeroplane_model"
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        data_tests:
+          - unique
+          - not_null
+      - name: manufacturer
+      - name: model
+      - name: max_seats
+      - name: max_weight
+      - name: max_distance
+      - name: engine_type
+
+      

@@ -1,0 +1,34 @@
+sources:
+  - name: external_source
+    meta:
+      external_location: "{{ env_var('TRANSFORM_S3_PATH_INPUT_JSON') }}"
+    tables:
+      - name: aeroplane_model
+
+  - name: external_source_excel
+    tables:
+      - name: order
+        meta:
+          external_location: "{{ env_var('TRANSFORM_S3_PATH_INPUT_EXCEL') }}"
+          sheet_name: "order"
+          plugin: excel
+      - name: customer
+        meta:
+          external_location: "{{ env_var('TRANSFORM_S3_PATH_INPUT_EXCEL') }}"
+          sheet_name: "customer"
+          plugin: excel
+      - name: customer_group
+        meta:
+          external_location: "{{ env_var('TRANSFORM_S3_PATH_INPUT_EXCEL') }}"
+          sheet_name: "customer_group"
+          plugin: excel
+      - name: aeroplane
+        meta:
+          external_location: "{{ env_var('TRANSFORM_S3_PATH_INPUT_EXCEL') }}"
+          sheet_name: "aeroplane"
+          plugin: excel
+      - name: trip
+        meta:
+          external_location: "{{ env_var('TRANSFORM_S3_PATH_INPUT_EXCEL') }}"
+          sheet_name: "trip"
+          plugin: excel

@@ -1,0 +1,39 @@
+name: "transform"
+version: "1.0.0"
+
+# This setting configures which "profile" dbt uses for this project.
+profile: "transform"
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets: # directories to be removed by `dbt clean`
+  - "target"
+  - "dbt_packages"
+
+models:
+  transform:
+    +materialized: view
+    staging:
+      +materialized: table
+      +schema: staging
+    marts:
+      orders:
+        dim_aeroplane:
+          +materialized: table
+          +schema: mart
+          +post-hook: '{{ export_data_csv("main_mart.dim_aeroplane", var("TRANSFORM_S3_PATH_OUTPUT") ) }}'
+        dim_customer:
+          +materialized: table
+          +schema: mart
+          +post-hook: '{{ export_data_csv("main_mart.dim_customer", var("TRANSFORM_S3_PATH_OUTPUT") ) }}'
+        fact_order:
+          +materialized: "{{ 'incremental' if target.name == 'prod' else 'table' }}"
+          +schema: mart
+          +on_schema_change: append_new_columns
+          +post-hook: '{{ export_data("main_mart.fact_order", "order_date", "s3://dev-challenge-bucket-eu1-ee/bolt/transformed-data" ) }}'
+          #+post-hook: '{{ export_data_csv("main_mart.fact_order", var("TRANSFORM_S3_PATH_OUTPUT") ) }}'

@@ -1,0 +1,14 @@
+models:
+  - name: order
+    description: "air-boltic-data"
+    columns:
+      - name: OrderID
+        description: "The primary key for this table"
+        data_tests:
+          - unique
+          - not_null
+      - name: CustomerID
+      - name: TripID
+      - name: PriceEUR
+      - name: SeatNo
+      - name: Status

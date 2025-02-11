@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: dim_aeroplane
+    description: "A dimension table for aeroplanes"
+    columns:
+      - name: AirplaneID
+      - name: Airplane_Model
+      - name: Manufacturer
+      - name: max_seats
+      - name: max_weight
+      - name: max_distance
+      - name: engine_type

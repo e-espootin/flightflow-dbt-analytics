@@ -1,0 +1,6 @@
+pandas
+fsspec
+s3fs
+openpyxl
+dbt-core    
+dbt-duckdb

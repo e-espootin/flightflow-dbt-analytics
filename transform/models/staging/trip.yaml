@@ -1,0 +1,14 @@
+models:
+  - name: trip
+    description: "air-boltic-data"
+    columns:
+      - name: TripID
+        description: "The primary key for this table"
+        data_tests:
+          - unique
+          - not_null
+      - name: Origin_City
+      - name: Destination_City
+      - name: AirplaneID
+      - name: Start_Timestamp
+      - name: End_Timestamp

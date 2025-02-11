@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: dim_customer
+    description: "A dimension table for customer information"
+    columns:
+      - name: CustomerID
+      - name: FirstName
+      - name: LastName
+      - name: Email
+      - name: Phone_Number
+      - name: CustomerGroupID
+      - name: CustomerGroupName
+      - name: CustomerGroupType
+      - name: Registry_Number
