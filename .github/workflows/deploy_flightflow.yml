@@ -1,0 +1,51 @@
+name: Run flightflow DBT project
+
+on:
+  workflow_dispatch: 
+  push: 
+    branches:
+      - dev
+
+jobs:
+  dbt-run:
+    runs-on: ubuntu-latest
+
+    env:
+      DBT_TARGET: dev
+      WORKING_DIR: transform
+    steps:
+    - name: Print DBT target
+      run: echo "DBT target is ${{ env.DBT_TARGET }}"
+
+    # Step 1: Check out the repository
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Set up Python
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+
+    # Install dependencies
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    # echo profile
+    - name: Echo DBT profiles.yml
+      run: cat transform/profiles.yml
+ 
+    - name: make debug
+      run: make debug --target ${{ env.DBT_TARGET }}
+
+    - name: make deps
+      run: make deps --target ${{ env.DBT_TARGET }}
+
+    - name: make test
+      run: make test --target ${{ env.DBT_TARGET }}
+
+    - name: make run
+      run: make run --target ${{ env.DBT_TARGET }}
+

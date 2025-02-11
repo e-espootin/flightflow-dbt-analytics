@@ -33,10 +33,12 @@ transform/
 
 ## Setup & Installation
 ```bash
-git clone https://github.com/your-username/x
-cd bolt-data
+git clone https://github.com/e-espootin/flightflow-dbt-analytics
+cd flightflow-dbt-analytics
 uv venv --python 3.12
+source .venv/bin/activate
 uv pip install -r requirements.txt
+cp .env.template .env
 make debug
 make run
 ```
