@@ -39,7 +39,7 @@ jobs:
         pip install -r requirements.txt
     
     - name: duckdb
-      run: mkdir duckdb_dir
+      run: mkdir transform/duckdb_dir
 
     - name: make debug
       run: make debug TARGET=${{ env.DBT_TARGET }}
