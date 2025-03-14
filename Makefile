@@ -1,4 +1,4 @@
-include .env.template
+include .env
 export
 
 DBT_FOLDER := transform
